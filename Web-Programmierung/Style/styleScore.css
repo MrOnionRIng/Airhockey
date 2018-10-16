@@ -1,0 +1,22 @@
+table{
+    width: 30%;
+    border: solid;
+}
+th{
+    font-family: "Bauhaus 93", arial;
+    font-size: 40px;
+    width: 30%;
+    border: solid;
+    padding: 6px;
+}
+td{
+    font-family: arial,sans-serif;
+    padding: 7px;
+    text-align: center;
+    width: 30%;
+    border: solid;
+}
+.superfont{
+    font-family: "Arial Black", arial;
+    font-size: 50px;
+}
