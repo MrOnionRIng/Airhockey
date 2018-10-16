@@ -1,0 +1,1 @@
+document.write("<div class=\"navbar\">\n" + "    <a class=\"active\" href=\"../index.html\">Start</a>\n" + "    <a href=\"spiel.html\">Spiel</a>\n" + "    <a href=\"spielanleitung.html\">Spielanleitung</a>\n" + "    <a href=\"impressum.html\">Impressum</a>\n" + "    <a href=\"highscore.html\">Highscore</a>\n" + "</div>");
