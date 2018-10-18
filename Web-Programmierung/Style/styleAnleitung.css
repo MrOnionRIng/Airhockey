@@ -1,10 +1,36 @@
-h1 {
+.textStyle1 {
     text-align: center;
-    font-family:'Arial Black', arial;
+    font-family:"Arial Black", "sans-serif";
     padding-bottom: 50px;
 }
-p1{
+.textStyle2{
     text-allign: right;
-    font-family: "Arial Black";
+    font-family: "Arial Black", "sans-serif";
     font-size: large;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    width: 120px;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px;
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
 }
