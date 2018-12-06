@@ -24,7 +24,7 @@
 <script>
   function startgame() {
     myGameArea.start();
-    balken1 = new komponente(20, 100, 'green', 360, 480);
+    balken1 = new komponente('green', 360, 480);
   }
 
   var myGameArea = {
@@ -47,8 +47,6 @@
          myGameArea.x = e.pageX;
          myGameArea.y = e.pageY;
          })*/
-
-
     },
     clear: function() {
       this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -56,15 +54,12 @@
 
   };
 
-  function komponente(width, height, color, x, y, type) //Funktion zur Erstellung der Komponenten
+  function komponente(color, x, y, type) //Funktion zur Erstellung der Komponenten
   {
-    this.type = type;
     if (type == 'image') {
       this.image = new Image();
       this.image.src = color; //url des Bildes eingeben statt "color"
     }
-    this.width = width;
-    this.height = height;
     this.speedX = 0;
     this.speedY = 0;
     this.x = x;
@@ -74,14 +69,13 @@
     {
       ctx = myGameArea.context;
       if (type == 'image') {
-        /*ctx.arc(x, y, 50, 0, 2 * Math.PI, false);*/
-        /*ctx.drawImage(this.image, this.x, this.y, this.width, this.height);*/
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
       } else {
-        ctx.fillStyle = color;
+        ctx.beginPath();
         ctx.arc(this.x, this.y, 50, 0, 2 * Math.PI, false);
-        ctx.fillStyle= 'green';
+        ctx.closePath();
+        ctx.fillStyle = color;
         ctx.fill();
-        /*ctx.fillRect(this.x, this.y, this.height, this.width);*/
       }
     };
 
@@ -95,10 +89,10 @@
   function updateGameArea() //clear und update gegen Objekt-Trail beim bewegen +
   {
     myGameArea.clear();
-    if (myGameArea.x && myGameArea.y) { //für Maus-Movement (Beta)
-      balken1.x = myGameArea.x;
-      balken1.y = myGameArea.y;
-    }
+      /*if (myGameArea.x && myGameArea.y) { //für Maus-Movement (Beta)
+       balken1.x = myGameArea.x;
+       balken1.y = myGameArea.y;
+       }*/
     balken1.speedX = 0; //für Tastatur Movement
     balken1.speedY = 0;
     if (myGameArea.key == 37) {balken1.speedX = -1; }
@@ -107,7 +101,6 @@
     if (myGameArea.key == 40) {balken1.speedY = 1; }
     balken1.newPos();
     balken1.update();
-
   }
 </script>
 
