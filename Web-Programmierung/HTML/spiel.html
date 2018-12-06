@@ -24,14 +24,14 @@
 <script>
   function startgame() {
     myGameArea.start();
-    balken1 = new komponente('green', 360, 480);
+    balken1 = new komponente('green', 360, 180, 50);
   }
 
   var myGameArea = {
     canvas: document.createElement('canvas'),
     start: function() {
-      this.canvas.width = 800; //Canvas soll 640x480 px groß sein egal?
-      this.canvas.height = 500;
+      this.canvas.width = 640; //Canvas soll 640x480 px groß sein egal?
+      this.canvas.height = 480;
       this.canvas.style.cursor = 'blue'; //Cursor auf Canvas verstecken
       this.context = this.canvas.getContext('2d'); //2d hat Methoden zum schreiben auf canvas
       document.body.insertBefore(this.canvas, null); //Problem: null sollte eig. document.body.childNodes[0] sein lädt aber dann vor der navbar
@@ -54,7 +54,7 @@
 
   };
 
-  function komponente(color, x, y, type) //Funktion zur Erstellung der Komponenten
+  function komponente(color, x, y, radius, type) //Funktion zur Erstellung der Komponenten
   {
     if (type == 'image') {
       this.image = new Image();
@@ -62,6 +62,7 @@
     }
     this.speedX = 0;
     this.speedY = 0;
+    this.radius = radius;
     this.x = x;
     this.y = y;
 
@@ -72,7 +73,7 @@
         ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
       } else {
         ctx.beginPath();
-        ctx.arc(this.x, this.y, 50, 0, 2 * Math.PI, false);
+        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
         ctx.closePath();
         ctx.fillStyle = color;
         ctx.fill();
@@ -83,8 +84,21 @@
     {
       this.x += this.speedX;
       this.y += this.speedY;
+      if (640 - this.radius < this.x) {
+        this.x -= this.speedX;
+      }
+      if (0 + this.radius > this.x) {
+        this.x -= this.speedX;
+      }
+      if (0 + this.radius > this.y) {
+        this.y -= this.speedY;
+      }
+      if (480 - this.radius < this.y) {
+        this.y -= this.speedY;
+      }
     };
-  }
+
+  };
 
   function updateGameArea() //clear und update gegen Objekt-Trail beim bewegen +
   {
@@ -95,10 +109,10 @@
        }*/
     balken1.speedX = 0; //für Tastatur Movement
     balken1.speedY = 0;
-    if (myGameArea.key == 37) {balken1.speedX = -1; }
-    if (myGameArea.key == 39) {balken1.speedX = 1; }
-    if (myGameArea.key == 38) {balken1.speedY = -1; }
-    if (myGameArea.key == 40) {balken1.speedY = 1; }
+    if (myGameArea.key == 37) {balken1.speedX = -3; }
+    if (myGameArea.key == 39) {balken1.speedX = 3; }
+    if (myGameArea.key == 38) {balken1.speedY = -3; }
+    if (myGameArea.key == 40) {balken1.speedY = 3; }
     balken1.newPos();
     balken1.update();
   }
