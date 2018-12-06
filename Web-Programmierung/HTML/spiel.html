@@ -24,14 +24,14 @@
 <script>
   function startgame() {
     myGameArea.start();
-    balken1 = new komponente('green', 360, 180, 50);
+    balken1 = new komponente('green', 360, 180, 35);
   }
 
   var myGameArea = {
     canvas: document.createElement('canvas'),
     start: function() {
-      this.canvas.width = 640; //Canvas soll 640x480 px groß sein egal?
-      this.canvas.height = 480;
+      this.canvas.width = 400; //Canvas soll 640x480 px groß sein egal?
+      this.canvas.height = 600;
       this.canvas.style.cursor = 'blue'; //Cursor auf Canvas verstecken
       this.context = this.canvas.getContext('2d'); //2d hat Methoden zum schreiben auf canvas
       document.body.insertBefore(this.canvas, null); //Problem: null sollte eig. document.body.childNodes[0] sein lädt aber dann vor der navbar
@@ -84,7 +84,7 @@
     {
       this.x += this.speedX;
       this.y += this.speedY;
-      if (640 - this.radius < this.x) {
+      if (400 - this.radius < this.x) {
         this.x -= this.speedX;
       }
       if (0 + this.radius > this.x) {
@@ -93,7 +93,7 @@
       if (0 + this.radius > this.y) {
         this.y -= this.speedY;
       }
-      if (480 - this.radius < this.y) {
+      if (600 - this.radius < this.y) {
         this.y -= this.speedY;
       }
     };
