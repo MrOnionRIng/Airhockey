@@ -25,6 +25,7 @@
   function startgame() {
     myGameArea.start();
     balken1 = new komponente('green', 360, 180, 35);
+    background = new komponente("Airhockey.jpeg", 600, 400, 0, "image" );
   }
 
   var myGameArea = {
@@ -113,6 +114,8 @@
     if (myGameArea.key == 39) {balken1.speedX = 3; }
     if (myGameArea.key == 38) {balken1.speedY = -3; }
     if (myGameArea.key == 40) {balken1.speedY = 3; }
+    background.newPos();
+    background.update();
     balken1.newPos();
     balken1.update();
   }
