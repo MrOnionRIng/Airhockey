@@ -24,10 +24,14 @@
 <script>
 
     var kreis1;
+    var mybackground;
+    var kreis2;
 
   function startgame() {
-      kreis1 = new kreis(100,50,20,"blue");
       myGameArea.start();
+      kreis1 = new kreis(100,50,20,"blue");
+      kreis2 = new kreis(150,100,20,"blue");
+      mybackground = new kreis(0,0,0,"Spielfeld.jpg", "image");
   }
 
   var myGameArea = {
@@ -57,21 +61,30 @@
 
   };
 
-  function kreis(x,y,radius,color) {
-      this.speedX = 1;
-      this.speedY = 1;
+  function kreis(x,y,radius,color, type) {
+      if(type == "image"){
+          this.image = new Image();
+          this.image.src = color;
+      }
+
+      this.speedX = 0;
+      this.speedY = 0;
       this.x = x;
       this.y = y;
       this.radius = radius;
       this.update = function() {
           ctx = myGameArea.context;
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, this.radius,0,2*Math.PI, false);
-          ctx.closePath();
-          ctx.fillStyle= color;
-          ctx.fill();
-          ctx.stroke();
-
+          if (type == "image"){
+              ctx.drawImage(this.image, this.x, this.y , 400, 600);
+          }
+          else {
+              ctx.beginPath();
+              ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
+              ctx.closePath();
+              ctx.fillStyle = color;
+              ctx.fill();
+              ctx.stroke();
+          }
       }
       this.newPos = function() //neue Position des Objekts basierend auf speed
       {
@@ -94,6 +107,8 @@
 
   };
 
+
+
   function updateGameArea() //clear und update gegen Objekt-Trail beim bewegen +
   {
     myGameArea.clear();
@@ -107,8 +122,13 @@
     if (myGameArea.key == 39) {kreis1.speedX = 3; }
     if (myGameArea.key == 38) {kreis1.speedY = -3; }
     if (myGameArea.key == 40) {kreis1.speedY = 3; }
+    mybackground.newPos();
+    mybackground.update();
+    kreis2.newPos();
+    kreis2.update();
     kreis1.newPos();
     kreis1.update();
+
   }
 </script>
 
