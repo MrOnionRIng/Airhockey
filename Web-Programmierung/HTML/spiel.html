@@ -29,9 +29,9 @@
     var musicTheme;
 
   function startgame() {
-      kreis1 = new kreis(140,80,20,"blue");
-      kreis2 = new kreis(150,100,20,"blue");
-      mybackground = new kreis(0,0,0,"../Pictures/Spielfeld.jpg", "image");
+      kreis1 = new komponente(140,80,20,"blue");
+      kreis2 = new komponente(150,100,20,"blue");
+      mybackground = new komponente(0,0,0,"../Pictures/Spielfeld.jpg", "image");
       musicTheme = new sound("../Sounds/Theme.mp3")
       musicTheme.play();
       myGameArea.start();
@@ -64,12 +64,11 @@
 
   };
 
-  function kreis(x,y,radius,color, type) {
+  function komponente(x,y,radius,color, type) {
       if(type == "image"){
           this.image = new Image();
           this.image.src = color;
       }
-
       this.speedX = 0;
       this.speedY = 0;
       this.x = x;
@@ -123,6 +122,7 @@
       this.stop = function () {
           this.sound.pause();
       }
+
   }
 
 
@@ -151,6 +151,8 @@
 
   }
 </script>
+<button onclick="musicTheme.stop()">Music Off</button>
+<button onclick="musicTheme.play()">Music On</button>
 
 <p style="text-align: center">Bewege den Balken mit der Maus</p>
 
