@@ -23,16 +23,18 @@
 <h1>Airhockey Beastmode</h1>
 <script>
 
-    var kreis1;
+    var player1;
     var mybackground;
-    var kreis2;
+    var bot;
     var musicTheme;
+    var puck;
 
   function startgame() {
-      kreis1 = new komponente(140,80,20,"blue");
-      kreis2 = new komponente(150,100,20,"blue");
-      mybackground = new komponente(0,0,0,"../Pictures/Spielfeld.jpg", "image");
-      musicTheme = new sound("../Sounds/Theme.mp3")
+      player1 = new komponente(160,470,80,80,0, "../Pictures/Schlaeger1.gif", "image");
+      bot = new komponente(160,50,80,80,0,"../Pictures/Schlaeger2.gif", "image");
+      puck = new komponente(184,280,40,40,0,"../Pictures/puck.gif","image");
+      mybackground = new komponente(0,0,400,600,0,"../Pictures/Spielfeld.jpg","image");
+      musicTheme = new sound("../Sounds/Theme.mp3");
       musicTheme.play();
       myGameArea.start();
   }
@@ -60,11 +62,14 @@
     },
     clear: function() {
       this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
+    },
+      stop : function(){
+        clearInterval(this.interval);
+      }
 
-  };
+  }
 
-  function komponente(x,y,radius,color, type) {
+  function komponente(x,y,width,height,radius,color,type) {
       if(type == "image"){
           this.image = new Image();
           this.image.src = color;
@@ -73,11 +78,13 @@
       this.speedY = 0;
       this.x = x;
       this.y = y;
+      this.width = width;
+      this.height = height;
       this.radius = radius;
       this.update = function() {
           var ctx = myGameArea.context;
           if (type == "image"){
-              ctx.drawImage(this.image, this.x, this.y , 400, 600);
+              ctx.drawImage(this.image, this.x, this.y , this.width, this.height);
           }
           else {
               ctx.beginPath();
@@ -106,8 +113,25 @@
           }
       }
 
+      this.aufprall = function(anderesobjekt){
+          var links = this.x;
+          var rechts = this.x + this.width;
+          var oben = this.y;
+          var unten = this.y + this.height;
+          var andereslinks = anderesobjekt.x;
+          var anderesrechts = anderesobjekt.x + anderesobjekt.width;
+          var anderesoben = anderesobjekt.y;
+          var anderesunten = anderesobjekt.y + anderesobjekt.height;
+          var crash = true;
+          if ((unten < anderesoben) || (oben > anderesunten) || (rechts < andereslinks) || (links > anderesrechts) ) {
+              crash = false;
+          }
+          return crash;
 
-  };
+      }
+
+
+  }
 
   function sound(src) {
       this.sound = document.createElement("audio")
@@ -136,18 +160,20 @@
        balken1.x = myGameArea.x;
        balken1.y = myGameArea.y;
        }*/
-    kreis1.speedX = 0; //für Tastatur Movement
-    kreis1.speedY = 0;
-    if (myGameArea.key == 37) {kreis1.speedX = -3; }
-    if (myGameArea.key == 39) {kreis1.speedX = 3; }
-    if (myGameArea.key == 38) {kreis1.speedY = -3; }
-    if (myGameArea.key == 40) {kreis1.speedY = 3; }
+    player1.speedX = 0; //für Tastatur Movement
+    player1.speedY = 0;
+    if (myGameArea.key == 37) {player1.speedX = -3; }
+    if (myGameArea.key == 39) {player1.speedX = 3; }
+    if (myGameArea.key == 38) {player1.speedY = -3; }
+    if (myGameArea.key == 40) {player1.speedY = 3; }
     mybackground.newPos();
     mybackground.update();
-    kreis2.newPos();
-    kreis2.update();
-    kreis1.newPos();
-    kreis1.update();
+    bot.newPos();
+    bot.update();
+    player1.newPos();
+    player1.update();
+    puck.newPos();
+    puck.update();
 
   }
 </script>
