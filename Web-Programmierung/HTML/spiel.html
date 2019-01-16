@@ -28,7 +28,7 @@
     var bot;
     var musicTheme;
     var puck;
-    var richtungpos = "true";
+
 
   function startgame() {
       player1 = new komponente(160,470,80,80,"../Pictures/Schlaeger1.gif", "image", "schlaeger");
@@ -66,7 +66,8 @@
 
   }
 
-  function komponente(x,y,width,height,color,type,form) {
+  function komponente(x,y,width,height,color,type,form)
+  {
       if(type == "image"){
           this.image = new Image();
           this.image.src = color;
@@ -78,6 +79,7 @@
       this.y = y;
       this.width = width;
       this.height = height;
+      var richtungpos = "true";
       this.update = function() {
           var ctx = myGameArea.context;
           if (type == "image"){
@@ -122,7 +124,8 @@
           }
       }
 
-      this.aufprall = function(anderesobjekt){
+      this.aufprall = function(anderesobjekt) //überprüft ob ein Aufprall stattfindet
+      {
           var links = this.x;
           var rechts = this.x + this.width;
           var oben = this.y;
@@ -138,7 +141,7 @@
           return crash;
 
       }
-      this.botlaueft = function()
+      this.botlaueft = function() //Funktion zum Verhalten des Bots
       {
               if (30 == this.x || richtungpos == "true") {
                   this.speedX = 2;
@@ -153,17 +156,18 @@
 
   }
 
-  function controls()
+  function controls() //Funktion für die Steuerung des Spielerschlägers
   {
       player1.speedX = 0;
       player1.speedY = 0;
-      if (myGameArea.key == 37) {player1.speedX = -3; }
-      if (myGameArea.key == 39) {player1.speedX = 3; }
-      if (myGameArea.key == 38) {player1.speedY = -3; }
-      if (myGameArea.key == 40) {player1.speedY = 3; }
+      if (myGameArea.key == 37) {player1.speedX = -3; } //Pfeiltaste links
+      if (myGameArea.key == 39) {player1.speedX = 3; } //Pfeiltaste rechts
+      if (myGameArea.key == 38) {player1.speedY = -3; } //Pfeiltaste oben
+      if (myGameArea.key == 40) {player1.speedY = 3; } //Pfeiltaste unten
   }
 
-  function sound(src) {
+  function sound(src) //Funktion zur Einfügung von Sounds
+  {
       this.sound = document.createElement("audio")
       this.sound.src = src;
       this.sound.setAttribute("preload", "auto");
@@ -197,11 +201,10 @@
   {
     myGameArea.clear();
     controls();
-      if(player1.aufprall(puck)){
+      if(player1.aufprall(puck)){ //Platzhalter für puckbounce
           puck.speedX += player1.speedX;
           puck.speedY += player1.speedY;
       }
-    //Platzhalter puckbounce
     mybackground.newPos();
     mybackground.update();
     bot.newPos();
