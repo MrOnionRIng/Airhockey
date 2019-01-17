@@ -23,6 +23,8 @@
 <h1>Airhockey Beastmode</h1>
 <script>
 
+    var meinScorekomp;
+    var botScorekomp;
     var player1;
     var mybackground;
     var bot;
@@ -30,8 +32,12 @@
     var puck;
     var tor1;
     var tor2;
+    var meinScore = 0;
+    var botScore = 0;
 
   function startgame() {
+      meinScorekomp = new komponente("30px","Consolas","black",100,40,"text");
+      botScorekomp = new komponente("30px","Consolas","black",40,40,"text");
       player1 = new komponente(160,470,80,80,"../Pictures/Schlaeger1.gif", "image", "schlaeger");
       bot = new komponente(160,50,80,80,"../Pictures/Schlaeger2.gif", "image", "schlaeger");
       puck = new komponente(184,280,40,40,"../Pictures/puck.gif","image", "puck");
@@ -75,6 +81,7 @@
           this.image = new Image();
           this.image.src = color;
       }
+      this.type = type;
       this.form = form;
       this.speedX = 0;
       this.speedY = 0;
@@ -87,6 +94,11 @@
           var ctx = myGameArea.context;
           if (type == "image"){
               ctx.drawImage(this.image, this.x, this.y , this.width, this.height);
+          }
+          else if (this.type == "text") {
+              ctx.font = this.width + " " + this.height;
+              ctx.fillStyle = color;
+              ctx.fillText(this.text, this.x, this.y);
           }
           else {
               ctx.fillStyle = color;
@@ -183,9 +195,12 @@
   {
       if(puck.aufprall(tor1)){
           spielReset();
+          meinScore += 1;
+
       }
       if(puck.aufprall(tor2)){
           spielReset();
+          botScore += 1;
       }
   }
 
@@ -227,14 +242,19 @@
   function updateGameArea() //clear und update gegen Objekt-Trail beim bewegen +
   {
     myGameArea.clear();
+    myGameArea.frameNo += 1;
     controls();
     puckbounce();
+    //meinScorekomp.text ="SpielerScore: " + meinScore;
+    //botScorekomp.text ="BotScore: " + botScore;
+    //meinScore.update();
+    //botScore.update();
     mybackground.newPos();
     mybackground.update();
-    //tor1.newPos();
-    //tor1.update();
-    //tor2.newPos();
-    //tor2.update();
+    tor1.newPos();
+    tor1.update();
+    tor2.newPos();
+    tor2.update();
     bot.newPos();
     bot.update();
     bot.botlaueft();
@@ -242,7 +262,7 @@
     player1.update();
     puck.newPos();
     puck.update();
-    //torschiessen();
+    torschiessen();
 
   }
 </script>
