@@ -94,8 +94,8 @@
       {
           this.x += this.speedX;
           this.y += this.speedY;
-          if(puck.form = "puck"){
-              if (330 < this.x) {
+          if(this.form == "puck"){
+              if (325 < this.x) {
                   this.speedX = -(this.speedX);
               }
               if (30 > this.x) {
@@ -108,17 +108,17 @@
                   this.speedY = -(this.speedY);
               }
           }
-          else{
-              if (330 < this.x) {
+          else if(this.form == "schlaeger" ){
+              if (295 < this.x) {
                   this.x -= this.speedX;
               }
-              if (30 > this.x) {
+              if (25 > this.x) {
                   this.x -= this.speedX;
               }
               if (40 > this.y) {
                   this.y -= this.speedY;
               }
-              if (520 < this.y) {
+              if (480 < this.y) {
                   this.y -= this.speedY;
               }
           }
