@@ -1,9 +1,13 @@
 table{
     width: 30%;
-    border: solid;
+    border: white;
+    margin-left: auto;
+    margin-right: auto;
+
 }
 th{
     font-family: "Bauhaus 93", arial;
+    color: white;
     font-size: 40px;
     width: 30%;
     border: solid;
@@ -11,6 +15,7 @@ th{
 }
 td{
     font-family: arial,sans-serif;
+    color: white;
     padding: 7px;
     text-align: center;
     width: 30%;
@@ -18,5 +23,14 @@ td{
 }
 h1{
     font-family: "Arial Black", arial;
+    color: white;
     font-size: 50px;
+    text-align: center;
+}
+.mybackground {
+    background-image: url("../Pictures/puck.gif");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+
 }
