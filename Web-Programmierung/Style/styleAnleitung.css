@@ -1,13 +1,19 @@
 .textStyle1 {
     text-align: center;
-    font-family:"Arial Black", "sans-serif";
+    font-family:"AlienFont", "sans-serif";
     padding-bottom: 50px;
 }
-.textStyle2{
-    text-allign: right;
-    font-family: "Arial Black", "sans-serif";
+div.textStyle2{
+    text-align-last: center;
+    font-family: "AlienFont", "sans-serif";
     font-size: large;
 }
+div.textStyle3 {
+    text-align: justify;
+    font-family:"Arial Hebrew", "sans-serif";
+    font-size: large;
+}
+
 
 .tooltip {
     position: relative;
@@ -33,4 +39,28 @@
 
 .tooltip:hover .tooltiptext {
     visibility: visible;
+}
+#myRectangle{
+    position: absolute;
+    width: 800px;
+    height: 100%;
+    background: #e6e9ec;
+    left: 50%;
+    padding: 30px;
+    margin-left: -430px;
+
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.mybackground{
+    background-image: url("../Pictures/AirHockeymitLöchern(Background).jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: 1350px 2040px ;
+}
+
+@font-face {
+    font-family: AlienFont;
+    src: url("../Fonts/Alien-Encounters-Solid-Bold-Italic.ttf");
 }
