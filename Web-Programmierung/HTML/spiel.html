@@ -36,8 +36,8 @@
     var botScore = 0;
 
   function startgame() {
-      meinScorekomp = new komponente("30px","Consolas","black",100,40,"text");
-      botScorekomp = new komponente("30px","Consolas","black",40,40,"text");
+      meinScorekomp = new komponente(88,30,"35px","Consolas","red","text");
+      botScorekomp = new komponente(300,30,"35px","Consolas","blue","text");
       player1 = new komponente(160,470,80,80,"../Pictures/Schlaeger1.gif", "image", "schlaeger");
       bot = new komponente(160,50,80,80,"../Pictures/Schlaeger2.gif", "image", "schlaeger");
       puck = new komponente(184,280,40,40,"../Pictures/puck.gif","image", "puck");
@@ -92,10 +92,10 @@
       var richtungpos = "true";
       this.update = function() {
           var ctx = myGameArea.context;
-          if (type == "image"){
+          if (this.type == "image"){
               ctx.drawImage(this.image, this.x, this.y , this.width, this.height);
           }
-          else if (this.type == "text") {
+          if (this.type == "text") {
               ctx.font = this.width + " " + this.height;
               ctx.fillStyle = color;
               ctx.fillText(this.text, this.x, this.y);
@@ -175,16 +175,16 @@
   {
       player1.speedX = 0;
       player1.speedY = 0;
-      if (myGameArea.key == 37) {player1.speedX = -3; } //Pfeiltaste links
-      if (myGameArea.key == 39) {player1.speedX = 3; } //Pfeiltaste rechts
-      if (myGameArea.key == 38) {player1.speedY = -3; } //Pfeiltaste oben
-      if (myGameArea.key == 40) {player1.speedY = 3; } //Pfeiltaste unten
+      if (myGameArea.key === 37) {player1.speedX = -3; } //Pfeiltaste links
+      if (myGameArea.key === 39) {player1.speedX = 3; } //Pfeiltaste rechts
+      if (myGameArea.key === 38) {player1.speedY = -3; } //Pfeiltaste oben
+      if (myGameArea.key === 40) {player1.speedY = 3; } //Pfeiltaste unten
   }
 
   function spielReset()
   {
-        player1.x= 160;
-        player1.y= 470;
+        player1.x = 160;
+        player1.y = 470;
         puck.speedX = 0;
         puck.speedY = 0;
         puck.x = 184;
@@ -196,7 +196,6 @@
       if(puck.aufprall(tor1)){
           spielReset();
           meinScore += 1;
-
       }
       if(puck.aufprall(tor2)){
           spielReset();
@@ -223,7 +222,7 @@
 
   function puckbounce()
   {
-      if (player1.aufprall(puck) && player1.speedX == 0 && player1.speedY == 0) {
+      if (player1.aufprall(puck) && player1.speedX === 0 && player1.speedY === 0) {
           puck.speedX = (-puck.speedX) - 1;
           puck.speedY = (-puck.speedY) - 1;
       }
@@ -245,12 +244,12 @@
     myGameArea.frameNo += 1;
     controls();
     puckbounce();
-    //meinScorekomp.text ="SpielerScore: " + meinScore;
-    //botScorekomp.text ="BotScore: " + botScore;
-    //meinScore.update();
-    //botScore.update();
     mybackground.newPos();
     mybackground.update();
+    meinScorekomp.text = meinScore;
+    meinScorekomp.update();
+    botScorekomp.text = botScore;
+    botScorekomp.update();
     tor1.newPos();
     tor1.update();
     tor2.newPos();
