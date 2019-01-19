@@ -1,15 +1,40 @@
 p{
-    font-family: "Times New Roman", "sans-serif";
+    font-family: "Arial", "sans-serif";
     line-height: 1.8;
     font-size: 20px;
 }
 
-h1{
-    font-family:"Arial Black", "sans-serif";
+.headerstyle1{
+    font-family:"AlienFont", "sans-serif";
+    font-size: 50px;
 }
 
 h2{
     font-family:"Arial Black", "sans-serif";
     font-style: normal;
     font-weight: bolder;
+}
+
+@font-face {
+    font-family: AlienFont;
+    src: url("../Fonts/Alien-Encounters-Solid-Bold-Italic.ttf");
+}
+
+.myImage{
+    background-image: url("../Pictures/AirHockeySchläger.svg");
+    background-repeat: no-repeat;
+
+    background-size: 594px 590px;
+    background-position: left 510px top 7%;
+}
+#myRectangle{
+
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    background: #e6e9ec;
+    padding: 50px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    text-align: left;
+
 }
