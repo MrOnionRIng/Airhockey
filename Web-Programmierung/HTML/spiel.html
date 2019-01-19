@@ -22,7 +22,7 @@
 </div>
 <h1>Airhockey Beastmode</h1>
 <script>
-
+    var pausenzaehler = 0;
     var meinScorekomp;
     var botScorekomp;
     var player1;
@@ -35,289 +35,313 @@
     var meinScore = 0;
     var botScore = 0;
 
-  function startgame() {
-      meinScorekomp = new komponente(88,30,"35px","Consolas","red","text");
-      botScorekomp = new komponente(300,30,"35px","Consolas","blue","text");
-      player1 = new komponente(160, 470, 25, 25, '', 'circle');
-      bot = new komponente(160, 50, 80, 80, '../Pictures/Schlaeger2.gif', 'image', 'schlaeger');
-      puck = new komponente(184, 280, 15, 15, '', 'circle', 'puck');
-      mybackground = new komponente(0,0,400,600,"../Pictures/Spielfeld.jpg","image");
-      tor1 = new komponente(127,0,150,45,"transparent");
-      tor2 = new komponente(127,550,150,45,"transparent");
-      musicTheme = new sound("../Sounds/Theme.mp3");
-      musicTheme.play();
-      myGameArea.start();
-  }
+    function startgame() {
+        meinScorekomp = new komponente(88, 30, '35px', 'Consolas', 'red', 'text');
+        botScorekomp = new komponente(300, 30, '35px', 'Consolas', 'blue', 'text');
+        //player1 = new komponente(160, 470, 80, 80, '../Pictures/Schlaeger1.gif', 'image', 'schlaeger');
+        player1 = new komponente(160, 470, 25, 25, '', 'circle');
+        player1 = new komponente(160, 50, 25, 25, '', 'circle');
 
-  var myGameArea = {
-    canvas: document.createElement('canvas'),
-    start: function() {
-      this.canvas.width = 400; //Canvas soll 640x480 px groß sein egal?
-      this.canvas.height = 600;
-      this.canvas.style.cursor = 'blue'; //Cursor auf Canvas verstecken
-      this.context = this.canvas.getContext('2d'); //2d hat Methoden zum schreiben auf canvas
-      document.body.insertBefore(this.canvas, null); //Problem: null sollte eig. document.body.childNodes[0] sein lädt aber dann vor der navbar
-      this.interval = setInterval(updateGameArea, 20); //ruft updateGameArea jede 20ste Millisekunde auf (50 mal pro Sekunde)
+        bot = new komponente(160, 50, 80, 80, '../Pictures/Schlaeger2.gif', 'image', 'schlaeger');
 
-      window.addEventListener('keydown', function(e) { //Für Tastatur-Movement
-        myGameArea.key = e.keyCode;
-      });
-      window.addEventListener('keyup', function(e) {
-        myGameArea.key = false;
-      });
-    },
-    clear: function() {
-      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    },
-      stop : function(){
-        clearInterval(this.interval);
-      }
+        //puck = new komponente(184, 280, 40, 40, '../Pictures/puck.gif', 'image', 'puck');
 
-  }
+        puck = new komponente(184, 280, 15, 15, '', 'circle', 'puck');
+        mybackground = new komponente(0, 0, 400, 600, '../Pictures/Spielfeld.jpg', 'image');
+        tor1 = new komponente(127, 0, 150, 45, 'transparent');
+        tor2 = new komponente(127, 550, 150, 45, 'transparent');
+        musicTheme = new sound('../Sounds/Theme.mp3');
+        musicTheme.play();
+        myGameArea.start();
+    }
 
-  function komponente(x,y,width,height,color,type,form)
-  {
-      if(type == "image"){
-          this.image = new Image();
-          this.image.src = color;
-      }
-      this.type = type;
-      this.form = form;
-      this.speedX = 0;
-      this.speedY = 0;
-      this.x = x;
-      this.y = y;
-      this.width = width;
-      this.height = height;
-      var richtungpos = "true";
-      this.update = function() {
-          var ctx = myGameArea.context;
-          if (this.type == "image"){
-              ctx.drawImage(this.image, this.x, this.y , this.width, this.height);
-          }
-          if (this.type == "text") {
-              ctx.font = this.width + " " + this.height;
-              ctx.fillStyle = color;
-              ctx.fillText(this.text, this.x, this.y);
-          }
-          if (this.type == 'circle') {
-              ctx.beginPath();
-              ctx.arc(this.x, this.y, this.height, 0, 2 * Math.PI, false);
-              ctx.closePath();
-              ctx.fillStyle = color;
-              ctx.fill();
-              ctx.stroke();
-          }
-          else {
-              ctx.fillStyle = color;
-              ctx.fillRect(this.x, this.y, this.width, this.height);
-          }
-      }
-      this.newPos = function() //neue Position des Objekts basierend auf speed
-      {
-          this.x += this.speedX;
-          this.y += this.speedY;
-          if (this.form == 'puck') {
-              if (325 - this.height < this.x) {
-                  this.speedX = -(this.speedX);
-              }
-              if (30 + this.height > this.x) {
-                  this.speedX = -(this.speedX);
-              }
-              if (40 + this.height > this.y) {
-                  this.speedY = -(this.speedY);
-              }
-              if (520 - this.height < this.y) {
-                  this.speedY = -(this.speedY);
-              }
-          }
-          else if(this.form == "schlaeger" ){
-              if (295 < this.x) {
-                  this.x -= this.speedX;
-              }
-              if (25 > this.x) {
-                  this.x -= this.speedX;
-              }
-              if (300 > this.y) {
-                  this.y -= this.speedY;
-              }
-              if (480 < this.y) {
-                  this.y -= this.speedY;
-              }
-          }
-      }
+    var myGameArea = {
+        canvas: document.createElement('canvas'),
+        start: function() {
+            this.canvas.width = 400; //Canvas soll 640x480 px groß sein egal?
+            this.canvas.height = 600;
+            this.canvas.style.cursor = 'blue'; //Cursor auf Canvas verstecken
+            this.context = this.canvas.getContext('2d'); //2d hat Methoden zum schreiben auf canvas
+            document.body.insertBefore(this.canvas, null); //Problem: null sollte eig. document.body.childNodes[0] sein lädt aber dann vor der navbar
+            this.interval = setInterval(updateGameArea, 20); //ruft updateGameArea jede 20ste Millisekunde auf (50 mal pro Sekunde)
 
-      this.aufprall = function(anderesobjekt) //überprüft ob ein Aufprall stattfindet
-      {
-          var links = this.x;
-          var rechts = this.x + this.width;
-          var oben = this.y;
-          var unten = this.y + this.height;
-          var andereslinks = anderesobjekt.x;
-          var anderesrechts = anderesobjekt.x + anderesobjekt.width;
-          var anderesoben = anderesobjekt.y;
-          var anderesunten = anderesobjekt.y + anderesobjekt.height;
-          var crash = true;
-          if ((unten < anderesoben) || (oben > anderesunten) || (rechts < andereslinks) || (links > anderesrechts) ) {
-              crash = false;
-          }
-          return crash;
-      }
-      this.botlaueft = function() //Funktion zum Verhalten des Bots
-      {
-          if (25 <= this.x && 30 >= this.x || richtungpos == "true") {
-              this.speedX = 3;
-              richtungpos = "true";
-          }
-          if (290 <= this.x && 300 >= this.x) {
-              richtungpos = "false";
-              this.speedX = -3;
-          }
+            window.addEventListener('keydown', function(e) { //Für Tastatur-Movement
+                myGameArea.key = e.keyCode;
+            });
+            window.addEventListener('keyup', function(e) {
+                myGameArea.key = false;
+            });
+        },
+        clear: function() {
+            this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        },
+        stop: function() {
+            clearInterval(this.interval);
+        }
 
-      }
-      this.aufprallCircle = function(anderesObject) {
-          if (this.getDistance(anderesObject) < this.height + anderesObject.height) {
-              return true;
-          }
-          return false;
-      };
+    };
 
-      this.getDistance = function(andersObject) {
-          let xDistence = this.x - andersObject.x;
-          let yDistance = this.y - andersObject.y;
+    function komponente(x, y, width, height, color, type, form) {
+        if (type == 'image') {
+            this.image = new Image();
+            this.image.src = color;
+        }
+        this.type = type;
+        this.form = form;
+        this.speedX = 0;
+        this.speedY = 0;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        var richtungpos = 'true';
+        this.update = function() {
+            var ctx = myGameArea.context;
+            if (this.type == 'image') {
+                ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+            }
+            if (this.type == 'text') {
+                ctx.font = this.width + ' ' + this.height;
+                ctx.fillStyle = color;
+                ctx.fillText(this.text, this.x, this.y);
+            }
+            if (this.type == 'circle') {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.height, 0, 2 * Math.PI, false);
+                ctx.closePath();
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.stroke();
+            } else {
+                ctx.fillStyle = color;
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+            }
+        };
 
-          return Math.sqrt(Math.pow(xDistence, 2) + Math.pow(yDistance, 2));
-      };
+        this.newPos = function() //neue Position des Objekts basierend auf speed
+        {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.form == 'puck') {
+                if (375 - this.height < this.x) {
+                    this.speedX = -(this.speedX);
+                }
+                if (20 + this.height > this.x) {
+                    this.speedX = -(this.speedX);
+                }
+                if (30 + this.height > this.y) {
+                    this.speedY = -(this.speedY);
+                }
+                if (560 - this.height < this.y) {
+                    this.speedY = -(this.speedY);
+                }
+            } else if (this.form == 'schlaeger') {
+                if (295 < this.x) {
+                    this.x -= this.speedX;
+                }
+                if (25 > this.x) {
+                    this.x -= this.speedX;
+                }
+                if (300 > this.y) {
+                    this.y -= this.speedY;
+                }
+                if (480 < this.y) {
+                    this.y -= this.speedY;
+                }
+            }
+        };
 
+        this.aufprall = function(anderesobjekt) //überprüft ob ein Aufprall stattfindet
+        {
+            var links = this.x;
+            var rechts = this.x + this.width;
+            var oben = this.y;
+            var unten = this.y + this.height;
+            var andereslinks = anderesobjekt.x;
+            var anderesrechts = anderesobjekt.x + anderesobjekt.width;
+            var anderesoben = anderesobjekt.y;
+            var anderesunten = anderesobjekt.y + anderesobjekt.height;
+            var crash = true;
+            if ((unten < anderesoben) || (oben > anderesunten) || (rechts < andereslinks) || (links > anderesrechts)) {
+                crash = false;
+            }
+            return crash;
 
+        };
 
-  }
+        this.aufprallCircle = function(anderesObject) {
+            if (this.getDistance(anderesObject) < this.height + anderesObject.height) {
+                return true;
+            }
+            return false;
+        };
 
+        this.botlaueft = function() //Funktion zum Verhalten des Bots
+        {
+            if (25 <= this.x && 30 >= this.x || richtungpos == 'true') {
+                this.speedX = 3;
+                richtungpos = 'true';
+            }
+            if (290 <= this.x && 300 >= this.x) {
+                richtungpos = 'false';
+                this.speedX = -3;
+            }
 
-  function controls() //Funktion für die Steuerung des Spielerschlägers
-  {
-      player1.speedX = 0;
-      player1.speedY = 0;
-      if (myGameArea.key === 37) {player1.speedX = -3; } //Pfeiltaste links
-      if (myGameArea.key === 39) {player1.speedX = 3; } //Pfeiltaste rechts
-      if (myGameArea.key === 38) {player1.speedY = -3; } //Pfeiltaste oben
-      if (myGameArea.key === 40) {player1.speedY = 3; } //Pfeiltaste unten
-  }
+        };
 
-  function spielReset()
-  {
+        this.getDistance = function(andersObject) {
+            let xDistence = this.x - andersObject.x;
+            let yDistance = this.y - andersObject.y;
+
+            return Math.sqrt(Math.pow(xDistence, 2) + Math.pow(yDistance, 2));
+        };
+
+    }
+
+    function controls() //Funktion für die Steuerung des Spielerschlägers
+    {
+        player1.speedX = 0;
+        player1.speedY = 0;
+        if (myGameArea.key === 37 && myGameArea.key === 38) {player1.speedX = -3; player1.speedY = -3; }//Bewegung Oben-Links
+        if (myGameArea.key === 39 && myGameArea.key === 38) {player1.speedX = 3; player1.speedY = -3; } //Bewegung Oben-Rechts
+        if (myGameArea.key === 40 && myGameArea.key === 38) {player1.speedX = 3; player1.speedY = -3; } //Bewegung Unten-Links
+        if (myGameArea.key === 40 && myGameArea.key === 39) {player1.speedX = 3; player1.speedY = 3; } //Bewegung Unten-Rechts
+        if (myGameArea.key === 37) {player1.speedX = -3; } //Pfeiltaste links
+        if (myGameArea.key === 39) {player1.speedX = 3; } //Pfeiltaste rechts
+        if (myGameArea.key === 38) {player1.speedY = -3; } //Pfeiltaste oben
+        if (myGameArea.key === 40) {player1.speedY = 3; } //Pfeiltaste unten
+
+    }
+
+    function spielReset() {
         player1.x = 160;
         player1.y = 470;
         puck.speedX = 0;
         puck.speedY = 0;
         puck.x = 184;
         puck.y = 280;
-  }
+    }
+
+    function torschiessen() {
+        if (puck.aufprall(tor1)) {
+            spielReset();
+            meinScore += 1;
+        }
+        if (puck.aufprall(tor2)) {
+            spielReset();
+            botScore += 1;
+        }
+    }
+
+    function gewonnenVerloren()
+    {
+        if (meinScore == 2){
+            musicTheme.stop();
+            alert("YOU WIN! YOU BEAT THE BEAST!");
+            document.location.reload();
+            myGameArea.stop();
+        }
+        if (botScore == 1){
+            musicTheme.stop();
+            alert("YOU LOOSE! YOU COULDN'T HANDLE THE BEAST!");
+            document.location.reload();
+            myGameArea.stop();
+        }
+
+    }
+
+    function sound(src) //Funktion zur Einfügung von Sounds
+    {
+        this.sound = document.createElement('audio');
+        this.sound.src = src;
+        this.sound.setAttribute('preload', 'auto');
+        this.sound.setAttribute('controls', 'none');
+        this.sound.setAttribute('loop', 'enabled');
+        this.sound.style.display = 'none';
+        document.body.appendChild(this.sound);
+        this.play = function() {
+            this.sound.play();
+        };
+        this.stop = function() {
+            this.sound.pause();
+        };
+
+    }
+
+    function puckbounce() {
+        if (player1.aufprallCircle(puck) && player1.speedX === 0 && player1.speedY === 0) {
+            puck.speedX = puck.speedX * -1;
+            puck.speedY = puck.speedY * -1;
+        }
+        if (player1.aufprallCircle(puck)) {
+            if (player1.speedX < 0 && player1.speedY == 0) {
+                puck.speedX = player1.speedX - 1;
+                puck.speedY = player1.speedY;
+            }
+            if (player1.speedX > 0 && player1.speedY == 0) {
+                puck.speedX = player1.speedX + 1;
+                puck.speedY = player1.speedY;
+            }
+            if (player1.speedX == 0 && player1.speedY < 0) {
+                puck.speedX = player1.speedX;
+                puck.speedY = player1.speedY - 1;
+            }
+            if (player1.speedX == 0 && player1.speedY > 0) {
+                puck.speedX = player1.speedX;
+                puck.speedY = player1.speedY + 1;
+
+            }
+
+        }
+    }
 
 
-  function torschiessen()
-  {
-      if(puck.aufprall(tor1)){
-          spielReset();
-          meinScore += 1;
-      }
-      if(puck.aufprall(tor2)){
-          spielReset();
-          botScore += 1;
-      }
-  }
+    function updateGameArea() //clear und update gegen Objekt-Trail beim bewegen +
+    {
+        myGameArea.clear();
+        myGameArea.frameNo += 1;
+        controls();
+        puckbounce();
+        mybackground.newPos();
+        mybackground.update();
+        meinScorekomp.text = meinScore;
+        meinScorekomp.update();
+        botScorekomp.text = botScore;
+        botScorekomp.update();
+        tor1.newPos();
+        tor1.update();
+        tor2.newPos();
+        tor2.update();
+        bot.newPos();
+        bot.update();
+        bot.botlaueft();
+        player1.newPos();
+        player1.update();
+        puck.newPos();
+        puck.update();
+        torschiessen();
+        gewonnenVerloren();
 
-  function sound(src) //Funktion zur Einfügung von Sounds
-  {
-      this.sound = document.createElement("audio")
-      this.sound.src = src;
-      this.sound.setAttribute("preload", "auto");
-      this.sound.setAttribute("controls", "none");
-      this.sound.setAttribute("loop", "enabled")
-      this.sound.style.display = "none";
-      document.body.appendChild(this.sound);
-      this.play = function () {
-          this.sound.play();
-      }
-      this.stop = function () {
-          this.sound.pause();
-      }
+    }
 
-  }
+    function pause(){
+        pausenzaehler++;
+        if(pausenzaehler%2 == 1){
+            musicTheme.stop();
+            myGameArea.stop();
 
-  function puckbounce()
-  {
-      if (player1.aufprallCircle(puck) && player1.speedX === 0 && player1.speedY === 0) {
-          puck.speedX = puck.speedX * -1;
-          puck.speedY = puck.speedY * -1;
-      }
-      if (player1.aufprallCircle(puck)) {
-          if (player1.speedX < 0 && player1.speedY == 0) {
-              puck.speedX = player1.speedX - 1;
-              puck.speedY = player1.speedY;
-          }
-          if (player1.speedX > 0 && player1.speedY == 0) {
-              puck.speedX = player1.speedX + 1;
-              puck.speedY = player1.speedY;
-          }
-          if (player1.speedX == 0 && player1.speedY < 0) {
-              puck.speedX = player1.speedX;
-              puck.speedY = player1.speedY - 1;
-          }
-          if (player1.speedX == 0 && player1.speedY > 0) {
-              puck.speedX = player1.speedX;
-              puck.speedY = player1.speedY + 1;
-
-          }
-      }
-  }
-
-  function gewonnenVerloren()
-  {
-      if (meinScore == 2){
-          alert("YOU WIN! YOU BEAT THE BEAST!");
-          document.location.reload();
-          myGameArea.stop();
-      }
-      if (botScore == 1){
-          alert("YOU LOOSE! YOU COULDN'T HANDLE THE BEAST!");
-          document.location.reload();
-          myGameArea.stop();
-      }
-
-  }
+        }
+        else{
+            musicTheme.play();
+            myGameArea.start();
+        }
+    }
 
 
-  function updateGameArea() //clear und update gegen Objekt-Trail beim bewegen +
-  {
-    controls();
-    puckbounce();
-    mybackground.newPos();
-    mybackground.update();
-    meinScorekomp.text = meinScore;
-    meinScorekomp.update();
-    botScorekomp.text = botScore;
-    botScorekomp.update();
-    tor1.newPos();
-    tor1.update();
-    tor2.newPos();
-    tor2.update();
-    bot.newPos();
-    bot.update();
-    bot.botlaueft();
-    puck.newPos();
-    puck.update();
-    player1.newPos();
-    player1.update();
-    torschiessen();
-    gewonnenVerloren();
-
-  }
 </script>
 <button onclick="musicTheme.stop()">Music Off</button>
 <button onclick="musicTheme.play()">Music On</button>
-<button onclick="myGameArea.stop()">Pause</button>
-
+<button onclick="pause()">Pause/Resume</button>
 
 <p style="text-align: center">Bewege den Balken mit der Maus</p>
 
