@@ -36,6 +36,7 @@
   var botScore = 0;
   var testKomponente;
 
+
   function startgame() {
     meinScorekomp = new komponente(88, 30, '35px', 'Consolas', 'red', 'text');
     botScorekomp = new komponente(300, 30, '35px', 'Consolas', 'blue', 'text');
@@ -49,7 +50,6 @@
     testKomponente = new komponente(300, 320, 25, 25, '../Pictures/Schlaeger1.gif', 'circleImage');
     musicTheme.play();
     myGameArea.start();
-
   }
 
   var myGameArea = {
@@ -274,19 +274,13 @@
   }
 
   function gewonnenVerloren() {
-    if (meinScore == 10) {
-      musicTheme.stop();
-      alert('YOU WIN! YOU BEAT THE BEAST!');
-      document.location.reload();
-      myGameArea.stop();
-    }
-    if (botScore == 10) {
+    if (botScore == 2) {
       musicTheme.stop();
       alert('YOU LOOSE! YOU COULDN\'T HANDLE THE BEAST!');
+      localStorage.setItem(meinScore,meinScore);
       document.location.reload();
       myGameArea.stop();
     }
-
   }
 
   function sound(src) //Funktion zur Einfügung von Sounds
