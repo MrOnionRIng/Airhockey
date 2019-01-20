@@ -19,24 +19,51 @@
         <a href="impressum.html">Impressum</a>
     </div>
 <h1>Highscore</h1>
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Score</th>
-    </tr>
-    <tr>
-        <td>Josh</td>
-        <td>9999</td>
-    </tr>
-    <tr>
-        <td>Alex</td>
-        <td>200</td>
-    </tr>
-    <tr>
-        <td>Daniel</td>
-        <td>2</td>
-    </tr>
-</table>
+
+<script>
+
+  function createTable(tableData) {
+    var table = document.createElement('table');
+    var tableBody = document.createElement('tbody');
+
+    tableData.forEach(function(rowData) {
+      var row = document.createElement('tr');
+
+      rowData.forEach(function(cellData) {
+        var cell = document.createElement('td');
+        cell.appendChild(document.createTextNode(cellData));
+        row.appendChild(cell);
+      });
+
+      tableBody.appendChild(row);
+    });
+
+    table.appendChild(tableBody);
+    document.body.appendChild(table);
+  }
+
+  function SortLocalStorage(){
+    if(localStorage.length > 0){
+      var localStorageArray = new Array();
+      for (i=0;i<localStorage.length;i++){
+        localStorageArray[i] = localStorage.key(i)+localStorage.getItem(localStorage.key(i));
+      }
+    }
+    var sortedArray = localStorageArray.sort();
+    return sortedArray;
+  }
+
+  if (typeof(Storage) !== "undefined") {
+    // Store
+    localStorage.setItem("Platzierung", "5");
+    localStorage.setItem("Platzierung", "5");
+    localStorage.setItem("Platzierung", "5");
+    // Retrieve
+  }
+
+  createTable(SortLocalStorage);
+
+</script>
 
 </body>
 </html>
