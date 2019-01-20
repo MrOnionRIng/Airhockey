@@ -19,10 +19,7 @@ canvas{
     font-family: AlienFont;
     src: url("../Fonts/Alien-Encounters-Solid-Bold-Italic.ttf");
 }
-@font-face{
-    font-family: Marker;
-    src: url("../Fonts/PermanentMarker-Regular.ttf")
-}
+
 
 #myRectangle{
     overflow: hidden;
