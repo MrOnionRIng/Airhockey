@@ -1,0 +1,19 @@
+h1{
+    font-family: "AlienFont", "sans-serif";
+    text-align: center;
+}
+
+
+p{
+    font-family:"AlienFont", "sans-serif";
+}
+@font-face {
+    font-family: AlienFont;
+    src: url("../Fonts/Alien-Encounters-Solid-Bold-Italic.ttf");
+}
+.mybackground {
+    background-image: url("../Pictures/HintergrundSpiel.gif");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}

@@ -11,7 +11,7 @@
           href="../Style/styleSpiel.css">
     <!--<script src="../JavaScript/navbar.js" type="text/javascript"></script>-->
 </head>
-<body onload="startgame()">
+<body onload="startgame()" class="mybackground">
 <div class="navbar">
     <a href="../index.html">Start</a>
     <a class="active"
@@ -20,7 +20,9 @@
     <a href="highscore.html">Highscore</a>
     <a href="impressum.html">Impressum</a>
 </div>
+<div id="myRectangle">
 <h1>Airhockey Beastmode</h1>
+</div>
 <script>
   var pausenzaehler = 0;
   var meinScorekomp;
@@ -407,9 +409,9 @@
     }
   }
 </script>
-<button onclick="musicTheme.stop()">Music Off</button>
-<button onclick="musicTheme.play()">Music On</button>
-<button onclick="pause()">Pause/Resume</button>
+<button class="button" onclick="musicTheme.stop()">Music Off</button>
+<button class="button" onclick="musicTheme.play()">Music On</button>
+<button class="button" onclick="pause()">Pause/Resume</button>
 
 </body>
 </html>

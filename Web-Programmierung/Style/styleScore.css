@@ -4,6 +4,7 @@ table{
     margin-left: auto;
     margin-right: auto;
 
+
 }
 th{
     font-family: "Bauhaus 93", arial;
@@ -22,15 +23,41 @@ td{
     border: solid;
 }
 h1{
-    font-family: "Arial Black", arial;
-    color: white;
-    font-size: 50px;
+    font-family: "AlienFont", arial;
     text-align: center;
+
 }
-.mybackground {
+
+
+#myRectangle{
+    overflow: hidden;
+    background: #e6e9ec;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    text-align: center;
+
+}
+@font-face {
+    font-family: AlienFont;
+    src: url("../Fonts/Alien-Encounters-Solid-Bold-Italic.ttf");
+}
+
+#myPuck {
     background-image: url("../Pictures/puck.gif");
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-size: cover;
+    background-size: 200%;
+    background-position: center;
+
+
+}
+.mybackground {
+
+    background-image: url("../Pictures/HintergrundSpiel.gif");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover ;
+
+
 
 }

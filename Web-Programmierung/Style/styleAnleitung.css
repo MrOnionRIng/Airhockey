@@ -48,7 +48,6 @@ div.textStyle3 {
     left: 50%;
     padding: 30px;
     margin-left: -430px;
-
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
@@ -57,10 +56,11 @@ div.textStyle3 {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
-    background-position: left 50% top -2%;
+    background-position: left 50% top -5%;
 
 
 }
+
 
 @font-face {
     font-family: AlienFont;

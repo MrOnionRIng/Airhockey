@@ -1,6 +1,11 @@
 h1{
     text-align: center;
-    font-family:"Arial Black", "sans-serif";
+    font-family:"AlienFont", "sans-serif";
+}
+p{
+    font-family: "Marker", "sans-serif";
+    text-align: center;
+    color:white;
 }
 
 canvas{
@@ -9,4 +14,37 @@ canvas{
     padding: 0;
     margin: auto;
     display: block;
+}
+@font-face {
+    font-family: AlienFont;
+    src: url("../Fonts/Alien-Encounters-Solid-Bold-Italic.ttf");
+}
+@font-face{
+    font-family: Marker;
+    src: url("../Fonts/PermanentMarker-Regular.ttf")
+}
+
+#myRectangle{
+    overflow: hidden;
+    background: #e6e9ec;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    text-align: center;
+
+}
+.mybackground{
+    background-image: url("../Pictures/HintergrundSpiel.gif");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+
+
+}
+.button{
+    background-color: indigo;
+    border: none;
+    color: white;
+    padding: 15px ;
+    text-align: center;
+    cursor:pointer;
 }
