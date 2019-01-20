@@ -40,13 +40,13 @@
     meinScorekomp = new komponente(88, 30, '35px', 'Consolas', 'red', 'text');
     botScorekomp = new komponente(300, 30, '35px', 'Consolas', 'blue', 'text');
     player1 = new komponente(200, 520, 25, 25, 'red', 'circle', 'spieler');
-    bot = new komponente(160, 70, 25, 25, 'blue', 'circle');
+    bot = new komponente(200, 70, 25, 25, 'blue', 'circle', 'spieler');
     puck = new komponente(200, 310, 15, 15, 'black', 'circle', 'puck');
     mybackground = new komponente(0, 0, 400, 600, '../Pictures/Spielfeld.jpg', 'image');
     tor1 = new komponente(127, 0, 150, 45, 'transparent');
     tor2 = new komponente(127, 550, 150, 45, 'transparent');
     musicTheme = new sound('../Sounds/Theme.mp3');
-    testKomponente = new komponente(300,320,25,25,"../Pictures/Schlaeger1.gif","circleImage");
+    testKomponente = new komponente(300, 320, 25, 25, '../Pictures/Schlaeger1.gif', 'circleImage');
     musicTheme.play();
     myGameArea.start();
 
@@ -80,7 +80,7 @@
   };
 
   function komponente(x, y, width, height, color, type, form) {
-    if (type == 'image' || "circleImage") {
+    if (type == 'image' || 'circleImage') {
       this.image = new Image();
       this.image.src = color;
     }
@@ -103,19 +103,19 @@
         ctx.fillStyle = color;
         ctx.fillText(this.text, this.x, this.y);
       }
-        if(this.type =="circleImage") {
-            ctx.save();
-            ctx.beginPath();
-            ctx.arc(this.x+25, this.y+25, this.height, 0, 2 * Math.PI, false); //braucht +height(radius) auf x,y Koordinate damit er richtig clippt
-            ctx.closePath();
-            ctx.clip();
-            ctx.drawImage(this.image, this.x, this.y, 50, 50);
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.height, 0, 2 * Math.PI, false);
-            ctx.clip();
-            ctx.closePath;
-            ctx.restore();
-        }
+      if (this.type == 'circleImage') {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(this.x + 25, this.y + 25, this.height, 0, 2 * Math.PI, false); //braucht +height(radius) auf x,y Koordinate damit er richtig clippt
+        ctx.closePath();
+        ctx.clip();
+        ctx.drawImage(this.image, this.x, this.y, 50, 50);
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.height, 0, 2 * Math.PI, false);
+        ctx.clip();
+        ctx.closePath;
+        ctx.restore();
+      }
       if (this.type == 'circle') {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.height, 0, 2 * Math.PI, false);
@@ -153,7 +153,7 @@
         if (20 + this.height > this.x) {
           this.x -= this.speedX;
         }
-        if (300 + this.height > this.y) {
+        if (30 + this.height > this.y) {
           this.y -= this.speedY;
         }
         if (560 - this.height < this.y) {
@@ -189,14 +189,26 @@
 
     this.botlaueft = function() //Funktion zum Verhalten des Bots
     {
-      if (40 <= this.x && 45 >= this.x || richtungpos == 'true') {
-        this.speedX = 3;
-        richtungpos = 'true';
+        if (40 <= this.x && 45 >= this.x || richtungpos == 'true') {
+         this.speedX = 3;
+         richtungpos = 'true';
+         }
+         if (350 <= this.x && 355 >= this.x) {
+         richtungpos = 'false';
+         this.speedX = -3;
+         }
+/*      if (puck.speedY === 0) {
+        this.speedY = 0;
       }
-      if (350 <= this.x && 355 >= this.x) {
-        richtungpos = 'false';
+      if (puck.speedX > 0) {
+        this.speedX = 3;
+      }
+      if (puck.speedX < 0) {
         this.speedX = -3;
       }
+      if (this.y - puck.y == 10) {
+        this.speedY = 3;
+      }*/
 
     };
 
@@ -274,44 +286,44 @@
 
   }
 
-  function puckbounce() {
-    if (player1.aufprallCircle(puck) && player1.speedX === 0 && player1.speedY === 0) {
-      puck.speedX = puck.speedX * -1;
-      puck.speedY = puck.speedY * -1;
+  function puckbounce(player) {
+    if (player.aufprallCircle(puck) && player.speedX === 0 && player.speedY === 0) {
+      puck.speedX = (puck.speedX * -1);
+      puck.speedY = (puck.speedY * -1);
     }
-    if (player1.aufprallCircle(puck)) {
-      if (player1.speedX < 0 && player1.speedY == 0) {
-        puck.speedX = player1.speedX - 1;
-        puck.speedY = player1.speedY;
+    if (player.aufprallCircle(puck)) {
+      if (player.speedX < 0 && player.speedY == 0) {
+        puck.speedX = player.speedX - 2;
+        puck.speedY = player.speedY;
       }
-      if (player1.speedX > 0 && player1.speedY == 0) {
-        puck.speedX = player1.speedX + 1;
-        puck.speedY = player1.speedY;
+      if (player.speedX > 0 && player.speedY == 0) {
+        puck.speedX = player.speedX + 2;
+        puck.speedY = player.speedY;
       }
-      if (player1.speedX == 0 && player1.speedY < 0) {
-        puck.speedX = player1.speedX;
-        puck.speedY = player1.speedY - 1;
+      if (player.speedX == 0 && player.speedY < 0) {
+        puck.speedX = player.speedX;
+        puck.speedY = player.speedY - 2;
       }
-      if (player1.speedX == 0 && player1.speedY > 0) {
-        puck.speedX = player1.speedX;
-        puck.speedY = player1.speedY + 1;
+      if (player.speedX == 0 && player.speedY > 0) {
+        puck.speedX = player.speedX;
+        puck.speedY = player.speedY + 2;
       }
-      if (player1.speedX > 0 && player1.speedY > 0) {
-        puck.speedX = player1.speedX + 1;
-        puck.speedY = player1.speedY + 1;
+      if (player.speedX > 0 && player.speedY > 0) {
+        puck.speedX = player.speedX + 2;
+        puck.speedY = player.speedY + 2;
       }
-      if (player1.speedX > 0 && player1.speedY < 0) {
-        puck.speedX = player1.speedX + 1;
-        puck.speedY = player1.speedY - 1;
+      if (player.speedX > 0 && player.speedY < 0) {
+        puck.speedX = player.speedX + 2;
+        puck.speedY = player.speedY - 2;
       }
-      if (player1.speedX < 0 && player1.speedY < 0) {
-        puck.speedX = player1.speedX - 1;
-        puck.speedY = player1.speedY - 1;
-      }if (player1.speedX < 0 && player1.speedY > 0) {
-        puck.speedX = player1.speedX - 1;
-        puck.speedY = player1.speedY + 1;
+      if (player.speedX < 0 && player.speedY < 0) {
+        puck.speedX = player.speedX - 2;
+        puck.speedY = player.speedY - 2;
       }
-
+      if (player.speedX < 0 && player.speedY > 0) {
+        puck.speedX = player.speedX - 2;
+        puck.speedY = player.speedY + 2;
+      }
     }
   }
 
@@ -321,11 +333,12 @@
     myGameArea.clear();
     myGameArea.frameNo += 1;
     controls();
-    puckbounce();
+    puckbounce(player1);
+    puckbounce(bot);
     mybackground.newPos();
     mybackground.update();
-      testKomponente.newPos();
-      testKomponente.update();
+    testKomponente.newPos();
+    testKomponente.update();
     puck.newPos();
     puck.update();
     bot.newPos();
