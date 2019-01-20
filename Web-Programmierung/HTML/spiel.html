@@ -40,7 +40,7 @@
     meinScorekomp = new komponente(88, 30, '35px', 'Consolas', 'red', 'text');
     botScorekomp = new komponente(300, 30, '35px', 'Consolas', 'blue', 'text');
     player1 = new komponente(200, 520, 25, 25, 'red', 'circle', 'spieler');
-    bot = new komponente(200, 70, 25, 25, 'blue', 'circle', 'spieler');
+    bot = new komponente(200, 70, 25, 25, 'blue', 'circle', 'bot');
     puck = new komponente(200, 310, 15, 15, 'black', 'circle', 'puck');
     mybackground = new komponente(0, 0, 400, 600, '../Pictures/Spielfeld.jpg', 'image');
     tor1 = new komponente(127, 0, 150, 45, 'transparent');
@@ -147,6 +147,19 @@
           this.speedY = -(this.speedY);
         }
       } else if (this.form == 'spieler') {
+          if (375 - this.height < this.x) {
+            this.x -= this.speedX;
+          }
+          if (20 + this.height > this.x) {
+            this.x -= this.speedX;
+          }
+          if (300 + this.height > this.y) {
+            this.y -= this.speedY;
+          }
+          if (560 - this.height < this.y) {
+            this.y -= this.speedY;
+          }
+      }else if (this.form == 'bot') {
         if (375 - this.height < this.x) {
           this.x -= this.speedX;
         }
@@ -156,7 +169,7 @@
         if (30 + this.height > this.y) {
           this.y -= this.speedY;
         }
-        if (560 - this.height < this.y) {
+        if (320 - this.height < this.y) {
           this.y -= this.speedY;
         }
       }
@@ -187,28 +200,31 @@
       return false;
     };
 
-    this.botlaueft = function() //Funktion zum Verhalten des Bots
+
+    //Bot bewegt sich, nachdem er das erste mal vom Puck getroffen wurde random im Feld. Speed wird neu gewürfelt, nachdem der Bot auf eine Wand getroffen ist
+    this.botlaueft = function()
     {
-        if (40 <= this.x && 45 >= this.x || richtungpos == 'true') {
-         this.speedX = 3;
-         richtungpos = 'true';
-         }
-         if (350 <= this.x && 355 >= this.x) {
-         richtungpos = 'false';
-         this.speedX = -3;
-         }
-/*      if (puck.speedY === 0) {
-        this.speedY = 0;
+      var array = [-10,-9,-8,-7,-6,-5,-4,-3,-3,4,5,6,7,8,9,10];
+
+      if(this.speedX == 0 && this.speedY == 0 && this.aufprallCircle(puck)){
+
+        this.speedX = array[Math.floor((Math.random() * 15) +1)];
+        this.speedY = array[Math.floor((Math.random() * 15) +1)];
       }
-      if (puck.speedX > 0) {
-        this.speedX = 3;
-      }
-      if (puck.speedX < 0) {
-        this.speedX = -3;
-      }
-      if (this.y - puck.y == 10) {
-        this.speedY = 3;
-      }*/
+
+        if (360 - this.height < this.x) {
+          this.speedX = array[Math.floor((Math.random() * 15) +1)];
+        }
+        if (30 + this.height > this.x) {
+          this.speedX = array[Math.floor((Math.random() * 15) +1)];
+        }
+        if (40 + this.height > this.y) {
+          this.speedY = array[Math.floor((Math.random() * 15) +1)];
+        }
+        if (310 - this.height < this.y) {
+          this.speedY = array[Math.floor((Math.random() * 15) +1)];
+        }
+
 
     };
 
@@ -225,20 +241,25 @@
   {
     player1.speedX = 0;
     player1.speedY = 0;
-    if (myGameArea.keys && myGameArea.keys[37]) {player1.speedX = -3; }
-    if (myGameArea.keys && myGameArea.keys[39]) {player1.speedX = 3; }
-    if (myGameArea.keys && myGameArea.keys[38]) {player1.speedY = -3; }
-    if (myGameArea.keys && myGameArea.keys[40]) {player1.speedY = 3; }
+    if (myGameArea.keys && myGameArea.keys[37]) {player1.speedX = -4; }
+    if (myGameArea.keys && myGameArea.keys[39]) {player1.speedX = 4; }
+    if (myGameArea.keys && myGameArea.keys[38]) {player1.speedY = -4; }
+    if (myGameArea.keys && myGameArea.keys[40]) {player1.speedY = 4; }
 
   }
 
   function spielReset() {
     player1.x = 200;
     player1.y = 520;
+    bot.x = 200;
+    bot.y = 70;
+    bot.speedX = 0;
+    bot.speedY = 0;
     puck.speedX = 0;
     puck.speedY = 0;
     puck.x = 200;
     puck.y = 310;
+
   }
 
   function torschiessen() {
@@ -286,6 +307,7 @@
 
   }
 
+  //Mathode für das Abprallen des Pucks bei Kontakt mit einem Spieler
   function puckbounce(player) {
     if (player.aufprallCircle(puck) && player.speedX === 0 && player.speedY === 0) {
       puck.speedX = (puck.speedX * -1);
@@ -293,18 +315,38 @@
     }
     if (player.aufprallCircle(puck)) {
       if (player.speedX < 0 && player.speedY == 0) {
+        if (puck.speedX < 0) {
+          puck.speedX = puck.speedX * -1;
+          return;
+        }
+        puck.x = puck.x - 5; //Sonst bugt sich der puck im Spieler fest
         puck.speedX = player.speedX - 2;
         puck.speedY = player.speedY;
       }
       if (player.speedX > 0 && player.speedY == 0) {
+        if (puck.speedX > 0) {
+          puck.speedX = puck.speedX * -1;
+          return;
+        }
+        puck.x = puck.x + 5;
         puck.speedX = player.speedX + 2;
         puck.speedY = player.speedY;
       }
       if (player.speedX == 0 && player.speedY < 0) {
+        if (puck.speedY < 0) {
+          puck.speedY = puck.speedY * -1;
+          return;
+        }
+        puck.y = puck.y - 20;
         puck.speedX = player.speedX;
         puck.speedY = player.speedY - 2;
       }
       if (player.speedX == 0 && player.speedY > 0) {
+        if (puck.speedY > 0) {
+          puck.speedY = puck.speedY * -1;
+          return;
+        }
+        puck.y = puck.y + 20;
         puck.speedX = player.speedX;
         puck.speedY = player.speedY + 2;
       }
@@ -370,8 +412,6 @@
       myGameArea.start();
     }
   }
-
-
 </script>
 <button onclick="musicTheme.stop()">Music Off</button>
 <button onclick="musicTheme.play()">Music On</button>
