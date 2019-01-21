@@ -114,6 +114,7 @@ function komponente(x, y, width, height, color, type, form) //Funktion zur Erste
             if (560 - this.height < this.y) {
                 this.speedY = -(this.speedY);
             }
+
         } else if (this.form == 'spieler') {
             if (375 - this.height < this.x) {
                 this.x -= this.speedX;
@@ -175,11 +176,7 @@ function komponente(x, y, width, height, color, type, form) //Funktion zur Erste
     {
         var array = [-10,-9,-8,-7,-6,-5,-4,-3,-3,4,5,6,7,8,9,10];
 
-        if(this.speedX == 0 && this.speedY == 0){
-            this.speedX = puck.speedX;
-        }
-
-        if(this.aufprallCircle(puck)){
+        if(this.speedX == 0 && this.speedY == 0 && this.aufprallCircle(puck)){
 
             this.speedX = array[Math.floor((Math.random() * 15) +1)];
             this.speedY = array[Math.floor((Math.random() * 15) +1)];
@@ -325,6 +322,7 @@ function puckbounce(player) {
             if (puck.speedX > 0 && puck.speedY > 0) {
                 puck.speedX = puck.speedX * -1;
                 puck.speedY = puck.speedY * -1;
+                return;
             }
             puck.x = puck.x + 5;
             puck.y = puck.y + 5;
@@ -335,6 +333,7 @@ function puckbounce(player) {
             if (puck.speedX > 0 && puck.speedY < 0) {
                 puck.speedX = puck.speedX * -1;
                 puck.speedY = puck.speedY * -1;
+                return;
             }
             puck.x = puck.x + 5;
             puck.y = puck.y - 5;
@@ -345,6 +344,7 @@ function puckbounce(player) {
             if (puck.speedX < 0 && puck.speedY < 0) {
                 puck.speedX = puck.speedX * -1;
                 puck.speedY = puck.speedY * -1;
+                return;
             }
             puck.x = puck.x - 5;
             puck.y = puck.y - 5;
@@ -355,6 +355,7 @@ function puckbounce(player) {
             if (puck.speedX < 0 && puck.speedY > 0) {
                 puck.speedX = puck.speedX * -1;
                 puck.speedY = puck.speedY * -1;
+                return;
             }
             puck.x = puck.x - 5;
             puck.y = puck.y + 5;
