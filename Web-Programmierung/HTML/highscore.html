@@ -65,12 +65,11 @@
                 localStorageArray[i] = localStorage.key(i);
             }
         }
-
-        scores = localStorageArray
+        scores = localStorageArray;
+        scores.sort();
     }
 
-    var lol = 15;
-    localStorage.setItem(lol,lol);
+
     sortLocalStorage();
 
     if (scores.length != 0) {
