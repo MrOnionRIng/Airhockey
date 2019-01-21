@@ -65,9 +65,10 @@
                 localStorageArray[i] = localStorage.key(i);
             }
         }
-
-        scores = localStorageArray
+        scores = localStorageArray;
+        scores.sort();
     }
+
 
     sortLocalStorage();
 
