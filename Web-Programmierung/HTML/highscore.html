@@ -65,11 +65,12 @@
                 localStorageArray[i] = localStorage.key(i);
             }
         }
-        localStorageArray.sort();
 
-        scores = localStorageArray;
+        scores = localStorageArray
     }
 
+    var lol = 15;
+    localStorage.setItem(lol,lol);
     sortLocalStorage();
 
     if (scores.length != 0) {
@@ -81,11 +82,11 @@
     if (scores.length >= 3) {
         document.getElementById('platz3').innerHTML = scores[scores.length - 3];
     }
-    if (scores.length >= 3) {
-        document.getElementById('platz3').innerHTML = scores[scores.length - 4];
+    if (scores.length >= 4) {
+        document.getElementById('platz4').innerHTML = scores[scores.length - 4];
     }
-    if (scores.length >= 3) {
-        document.getElementById('platz3').innerHTML = scores[scores.length - 5];
+    if (scores.length >= 5) {
+        document.getElementById('platz5').innerHTML = scores[scores.length - 5];
     }
 
 
