@@ -11,6 +11,8 @@ var tor2;
 var meinScore = 0;
 var botScore = 0;
 var testKomponente;
+var puckhitsound;
+var puckintorsound;
 
 
 function startgame()
@@ -24,6 +26,8 @@ function startgame()
     tor1 = new komponente(127, 0, 150, 45, 'transparent');
     tor2 = new komponente(127, 550, 150, 45, 'transparent');
     musicTheme = new sound('../Sounds/Theme.mp3');
+    puckhitsound = new sound("../Sounds/Puckhit.wav");
+    puckintorsound = new sound("../Sounds/PuckInTor.wav");
     testKomponente = new komponente(300, 320, 25, 25, '../Pictures/Schlaeger1.gif', 'circleImage');
     musicTheme.play();
     myGameArea.start();
@@ -58,7 +62,7 @@ var myGameArea = {
 
 function komponente(x, y, width, height, color, type, form) //Funktion zur Erstellung der Komponenten im Spiel
 {
-    if (type == 'image' || 'circleImage') {
+    if (type == 'image' ) {
         this.image = new Image();
         this.image.src = color;
     }
@@ -70,7 +74,6 @@ function komponente(x, y, width, height, color, type, form) //Funktion zur Erste
     this.y = y;
     this.width = width;
     this.height = height;
-    var richtungpos = 'true';
     this.update = function() {
         var ctx = myGameArea.context;
         if (this.type == 'image') {
@@ -236,10 +239,12 @@ function spielReset() //Resetet das Spiel
 function torschiessen() //Torschuss Funktion
 {
     if (puck.aufprall(tor1)) {
+        puckintorsound.play();
         spielReset();
         meinScore += 1;
     }
     if (puck.aufprall(tor2)) {
+        puckintorsound.play();
         spielReset();
         botScore += 1;
     }
