@@ -1,7 +1,7 @@
 p{
     font-family: "Arial", "sans-serif";
-    line-height: 1.8;
-    font-size: 20px;
+line-height: 1.8;
+font-size: 20px;
 }
 p2{
     font-family:"Arial", "sans-serif";
@@ -25,7 +25,7 @@ h2{
 }
 
 .myImage{
-    background-image: url("../Pictures/AirHockeySchläger.svg");
+    background-image: url("../Pictures/AirHockeySchlaeger.svg");
     background-repeat: no-repeat;
 
     background-size: 504px 500px;
