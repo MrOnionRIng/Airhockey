@@ -26,8 +26,8 @@ function startgame()
     tor1 = new komponente(127, 0, 150, 45, 'transparent');
     tor2 = new komponente(127, 550, 150, 45, 'transparent');
     musicTheme = new sound('../Sounds/Theme.mp3');
-    puckhitsound = new sound("../Sounds/Puckhit.wav");
-    puckintorsound = new sound("../Sounds/PuckInTor.wav");
+    puckhitsound = new sound("../Sounds/Puckhit.mp3");
+    puckintorsound = new sound("../Sounds/PuckInTor.mp3");
     testKomponente = new komponente(300, 320, 25, 25, '../Pictures/Schlaeger1.gif', 'circleImage');
     musicTheme.play();
     myGameArea.start();
@@ -267,7 +267,6 @@ function sound(src) //Funktion zur Einfügung von Sounds
     this.sound.src = src;
     this.sound.setAttribute('preload', 'auto');
     this.sound.setAttribute('controls', 'none');
-    this.sound.setAttribute('loop', 'enabled');
     this.sound.style.display = 'none';
     document.body.appendChild(this.sound);
     this.play = function() {
